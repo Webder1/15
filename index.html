@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fatto a Mano Dessert Feedback</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header>
-    <h1>Fatto a Mano Dessert Feedback</h1>
-    <p class="intro-text">Your thoughts help us craft the perfect experience!</p>
-  </header>
-
-  <main>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fatto a Mano Dessert Feedback</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Fatto a Mano Dessert Feedback</h1>
+    </header>
     <div class="container">
-      <form id="feedbackForm" action="https://formspree.io/f/xdkdkryv" method="POST" novalidate>
+      <form action="https://formspree.io/f/xdkdkryv" method="POST">
         <label for="dessert">Which dessert did you try?</label>
         <select name="dessert" id="dessert" required>
           <option value="" disabled selected>Select a dessert</option>
@@ -33,22 +29,20 @@
         </select>
 
         <label>How would you rate the dessert?</label>
-        <div class="stars" id="dessert-stars" role="radiogroup" aria-label="Dessert rating" tabindex="0" aria-live="polite">
-          <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="-1" aria-label="1 star">★</span>
-          <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="-1" aria-label="2 stars">★</span>
-          <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="-1" aria-label="3 stars">★</span>
-          <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="-1" aria-label="4 stars">★</span>
-          <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="-1" aria-label="5 stars">★</span>
+        <div class="stars" id="dessert-stars" data-input="dessertRating">
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
         </div>
-        <input type="hidden" name="dessertRating" id="dessertRating" required>
+        <input type="hidden" name="dessertRating" id="dessertRating" />
 
-        <div class="feedback-followup">
-          <label for="dessertReason">What led you to give this rating?</label>
-          <textarea name="dessertReason" id="dessertReason" placeholder="Tell us what stood out – good or bad"></textarea>
+        <label for="dessertReason">What led you to give this rating?</label>
+        <textarea name="dessertReason" id="dessertReason" placeholder="Tell us what stood out – good or bad"></textarea>
 
-          <label for="dessertImprove">What could we improve to make it a 5-star experience?</label>
-          <textarea name="dessertImprove" id="dessertImprove" placeholder="Your feedback helps us grow!"></textarea>
-        </div>
+        <label for="dessertImprove">What could we improve to make it a 5-star experience?</label>
+        <textarea name="dessertImprove" id="dessertImprove" placeholder="Your feedback helps us grow!"></textarea>
 
         <label for="server">Who was your server?</label>
         <select name="server" id="server" required>
@@ -60,22 +54,20 @@
         </select>
 
         <label>How would you rate the service?</label>
-        <div class="stars" id="server-stars" role="radiogroup" aria-label="Server rating" tabindex="0" aria-live="polite">
-          <span class="star" data-value="1" role="radio" aria-checked="false" tabindex="-1" aria-label="1 star">★</span>
-          <span class="star" data-value="2" role="radio" aria-checked="false" tabindex="-1" aria-label="2 stars">★</span>
-          <span class="star" data-value="3" role="radio" aria-checked="false" tabindex="-1" aria-label="3 stars">★</span>
-          <span class="star" data-value="4" role="radio" aria-checked="false" tabindex="-1" aria-label="4 stars">★</span>
-          <span class="star" data-value="5" role="radio" aria-checked="false" tabindex="-1" aria-label="5 stars">★</span>
+        <div class="stars" id="service-stars" data-input="serviceRating">
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
+          <span class="star" tabindex="0">★</span>
         </div>
-        <input type="hidden" name="serverRating" id="serverRating" required>
+        <input type="hidden" name="serviceRating" id="serviceRating" />
 
-        <div class="feedback-followup">
-          <label for="serviceReason">Why did you give this rating for service?</label>
-          <textarea name="serviceReason" id="serviceReason" placeholder="Helpful, slow, super friendly?"></textarea>
+        <label for="serviceReason">Why did you give this rating for service?</label>
+        <textarea name="serviceReason" id="serviceReason" placeholder="Helpful, slow, super friendly?"></textarea>
 
-          <label for="serviceImprove">How could we elevate the service to 5 stars?</label>
-          <textarea name="serviceImprove" id="serviceImprove" placeholder="Any suggestions are appreciated!"></textarea>
-        </div>
+        <label for="serviceImprove">How could we elevate the service to 5 stars?</label>
+        <textarea name="serviceImprove" id="serviceImprove" placeholder="Any suggestions are appreciated!"></textarea>
 
         <label for="email">Email (optional – for thank you or follow-up)</label>
         <input type="email" name="email" id="email" placeholder="your@email.com" />
@@ -83,17 +75,15 @@
         <button type="submit" class="submit-btn">Submit Feedback</button>
       </form>
     </div>
-  </main>
 
-  <!-- Confirmation Modal -->
-  <div id="confirmationModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-    <div class="modal-content" role="document">
-      <h2 id="modalTitle">Thank You for Your Feedback!</h2>
-      <p id="modalDesc">We appreciate your time and insights. Your feedback helps us make every dessert and service experience better.</p>
-      <button id="closeModalBtn" aria-label="Close confirmation message">Close</button>
+    <div class="modal" id="thankYouModal">
+      <div class="modal-content">
+        <h2>Grazie!</h2>
+        <p>Thank you for your feedback. We truly appreciate it!</p>
+        <button id="closeModal">Close</button>
+      </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
