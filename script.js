@@ -1,9 +1,9 @@
-// Star rating setup
 function setupStarRating(starContainerId, hiddenInputId) {
   const container = document.getElementById(starContainerId);
   const stars = container.querySelectorAll('.star');
   const hiddenInput = document.getElementById(hiddenInputId);
   let selectedValue = 0;
+  let touched = false;
 
   function setStars(rating) {
     stars.forEach(star => {
@@ -21,29 +21,39 @@ function setupStarRating(starContainerId, hiddenInputId) {
   stars.forEach(star => {
     const starValue = parseInt(star.dataset.value, 10);
 
+    // Hover effect for mouse only
     star.addEventListener('mouseover', () => {
+      if (touched) return; // Skip hover if using touch
       stars.forEach(s => {
         const val = parseInt(s.dataset.value, 10);
         s.classList.toggle('hovered', val <= starValue);
       });
     });
 
-    star.addEventListener('mouseout', clearHover);
+    star.addEventListener('mouseout', () => {
+      if (!touched) clearHover();
+    });
 
-    // Handle both click and touchstart for mobile + desktop
+    // Main selection handler
     const handleSelect = () => {
       selectedValue = starValue;
       setStars(selectedValue);
       clearHover();
     };
 
-    star.addEventListener('click', handleSelect);
-    star.addEventListener('touchstart', e => {
-      e.preventDefault(); // prevent double-trigger
-      handleSelect();
+    // Click for desktop
+    star.addEventListener('click', e => {
+      if (!touched) handleSelect();
     });
 
-    // Keyboard accessibility
+    // Touch for mobile
+    star.addEventListener('touchstart', e => {
+      touched = true;
+      e.preventDefault(); // Avoid triggering click too
+      handleSelect();
+    }, { passive: false });
+
+    // Keyboard support
     star.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -53,8 +63,7 @@ function setupStarRating(starContainerId, hiddenInputId) {
     });
   });
 
-  // Initialize to zero stars selected
-  setStars(0);
+  setStars(0); // Start with no stars selected
 }
 
 document.addEventListener('DOMContentLoaded', () => {
