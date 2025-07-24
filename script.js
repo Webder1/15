@@ -14,29 +14,40 @@ function setupStarRating(starContainerId, hiddenInputId) {
     hiddenInput.value = rating;
   }
 
+  function clearHover() {
+    stars.forEach(s => s.classList.remove('hovered'));
+  }
+
   stars.forEach(star => {
+    const starValue = parseInt(star.dataset.value, 10);
+
     star.addEventListener('mouseover', () => {
-      const hoverValue = parseInt(star.dataset.value, 10);
       stars.forEach(s => {
-        const starVal = parseInt(s.dataset.value, 10);
-        s.classList.toggle('hovered', starVal <= hoverValue);
+        const val = parseInt(s.dataset.value, 10);
+        s.classList.toggle('hovered', val <= starValue);
       });
     });
 
-    star.addEventListener('mouseout', () => {
-      stars.forEach(s => s.classList.remove('hovered'));
-    });
+    star.addEventListener('mouseout', clearHover);
 
-    star.addEventListener('click', () => {
-      selectedValue = parseInt(star.dataset.value, 10);
+    // Handle both click and touchstart for mobile + desktop
+    const handleSelect = () => {
+      selectedValue = starValue;
       setStars(selectedValue);
+      clearHover();
+    };
+
+    star.addEventListener('click', handleSelect);
+    star.addEventListener('touchstart', e => {
+      e.preventDefault(); // prevent double-trigger
+      handleSelect();
     });
 
-    // Keyboard accessibility: select rating on Enter or Space
+    // Keyboard accessibility
     star.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        selectedValue = parseInt(star.dataset.value, 10);
+        selectedValue = starValue;
         setStars(selectedValue);
       }
     });
@@ -49,7 +60,7 @@ function setupStarRating(starContainerId, hiddenInputId) {
 document.addEventListener('DOMContentLoaded', () => {
   setupStarRating('dessert-stars', 'dessertRating');
   setupStarRating('server-stars', 'serverRating');
-
+});
   // Modal elements
   const modal = document.getElementById('confirmationModal');
   const closeModalBtn = document.getElementById('closeModalBtn');
